@@ -75,7 +75,8 @@
   :custom
   (pomm-state-file-location "~/.config/emacs/extras/pomm")
   (pomm-third-time-state-file-location "~/.config/emacs/extras/pomm-third-time")
-  (pomm-long-break-period 15))
+  (pomm-long-break-period 15)
+  (pomm-ask-before-long-break nil))
 
 (use-package rainbow-delimiters
   :straight t
