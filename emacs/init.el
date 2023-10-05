@@ -36,7 +36,7 @@
   (setq lsp-log-io nil)
   (setq lsp-idle-delay 0.500)
   (setq lsp-use-plists t)
-  
+  (setq warning-suppress-types '((lsp-mode)))
   ;; (setq lsp-keymap-prefix "s-l")
   :hook ((prog-mode . lsp-deferred)
          ;; if you want which-key integration
@@ -81,3 +81,8 @@
 (use-package rainbow-delimiters
   :straight t
   :hook (prog-mode . rainbow-delimiters-mode))
+
+(use-package markdown-mode
+  :straight t
+  :mode ("README\\.md\\'" . gfm-mode)
+  :init (setq markdown-command "multimarkdown"))
