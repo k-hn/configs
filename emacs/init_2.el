@@ -49,6 +49,10 @@
   :init
   (add-hook 'after-init-hook 'global-company-mode))
 
+(use-package rainbow-delimiters
+  :straight t
+  :hook (prog-mode . rainbow-delimiters-mode))
+
 ;; Idris
 ;;;;;;;;
 (use-package idris-mode
