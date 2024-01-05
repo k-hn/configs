@@ -1,4 +1,8 @@
-theme = "catppuccin_mocha"
+# theme = "catppuccin_mocha"
+# theme = "sonokai"
+# theme = "dark_plus"
+# theme = "everforest_dark"
+theme = "base16_default"
 
 [editor]
 line-number = "relative"
