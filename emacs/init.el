@@ -6,6 +6,7 @@
 (add-hook 'emacs-startup-hook
           (lambda ()
             (setq gc-cons-threshold (expt 2 23))))
+(setq use-package-always-defer t)
 
 ;; straight package manager
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -25,37 +26,49 @@
       (eval-print-last-sexp)))
   (load bootstrap-file nil 'nomessage))
 
+(use-package doom-themes
+  :straight t)
+
+(use-package theme-changer
+  :straight t
+  :demand t
+  :init
+  (setq calendar-latitude 5.614818)
+  (setq calendar-longitude -0.205874)
+  :config
+  (change-theme 'doom-one-light 'doom-one))
+
 (use-package emacs
   :init
   (setq make-backup-files nil)
-  (load-theme 'wombat t))
+  (setq scroll-conservatively 101))
 
 (use-package elec-pair
   :straight nil
-  :config
+  :init
   (electric-pair-mode t))
 
 (use-package display-line-numbers
   :straight nil
-  :config
+  :init
   (global-display-line-numbers-mode t))
 
 (use-package eglot
   :straight nil
   :init
-  :config
   (setq read-process-output-max (* 1024 1024)
 	eglot-autoshutdown t)
-  (add-to-list 'eglot-server-programs
-	       '(idris-mode . ("idris2-lsp"))
-	       '(c-mode . ("clangd")))
+  :config
+  (add-to-list 'eglot-server-programs '(idris-mode . ("idris2-lsp")))
   :hook
   (c-mode . eglot-ensure)
   (idris-mode . eglot-ensure))
 
 (use-package which-key
   :straight t
+  :demand t
   :config
+  (setq which-key-idle-delay 0.25)
   (which-key-mode))
 
 (use-package company
