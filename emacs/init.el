@@ -59,10 +59,7 @@
   (setq read-process-output-max (* 1024 1024)
 	eglot-autoshutdown t)
   :config
-  (add-to-list 'eglot-server-programs '(idris-mode . ("idris2-lsp")))
-  :hook
-  (c-mode . eglot-ensure)
-  (idris-mode . eglot-ensure))
+  (add-to-list 'eglot-server-programs '(idris-mode . ("idris2-lsp"))))
 
 (use-package which-key
   :straight t
@@ -85,6 +82,12 @@
 (use-package magit
   :straight t)
 
+;; C
+;;;;
+(use-package c-mode
+  :straight nil
+  :hook (c-mode . eglot-ensure))
+
 ;; Idris
 ;;;;;;;;
 (use-package idris-mode
@@ -93,7 +96,8 @@
   (idris-interpreter-path "idris2")
   :hook
   ;; load opened file, mainly for the semantic syntax highlighting on open
-  (idris-mode . idris-load-file))
+  (idris-mode . idris-load-file)
+  (idris-mode . eglot-ensure))
 
 ;; Markdown
 ;;;;;;;;;;;
