@@ -33,15 +33,16 @@
   :straight t
   :demand t
   :init
-  (setq calendar-latitude 5.614818)
-  (setq calendar-longitude -0.205874)
+  (setq calendar-latitude 5.55)
+  (setq calendar-longitude -0.22)
   :config
   (change-theme 'doom-one-light 'doom-one))
 
 (use-package emacs
   :init
   (setq make-backup-files nil)
-  (setq scroll-conservatively 101))
+  (setq scroll-conservatively 101)
+  (global-hl-line-mode t))
 
 (use-package elec-pair
   :straight nil
@@ -76,6 +77,15 @@
 (use-package rainbow-delimiters
   :straight t
   :hook (prog-mode . rainbow-delimiters-mode))
+
+(use-package all-the-icons
+  :if (display-graphic-p))
+
+(use-package neotree
+  :straight t
+  :bind ([f2] . 'neotree-toggle)
+  :config
+  (setq neo-theme (if (display-graphic-p) 'icons 'arrow)))
 
 ;; Magit
 ;;;;;;;;
