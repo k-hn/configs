@@ -9,12 +9,13 @@
 ;; Indicate which modules to import to access the variables
 ;; used in this configuration.
 (use-modules (gnu))
+(use-modules (gnu services pm))
 (use-modules (nongnu packages linux)
             (nongnu system linux-initrd))
 (use-service-modules cups desktop networking ssh xorg)
 
 ;; Non-guix service
-(define %nonguix-service
+(define %modified-desktop-services
   (modify-services %desktop-services
 		   (guix-service-type config =>
 				      (guix-configuration
@@ -58,6 +59,13 @@
   (services
    (append (list (service gnome-desktop-service-type)
 
+		 ;; power management
+		 (service tlp-service-type
+			  (tlp-configuration
+			   (cpu-scaling-governor-on-ac (list "performance"))
+			   (sched-powersave-on-bat? #t)))
+		 (service thermald-service-type)
+		 
                  ;; To configure OpenSSH, pass an 'openssh-configuration'
                  ;; record as a second argument to 'service' below.
                  (service openssh-service-type)
@@ -69,7 +77,7 @@
            ;; are appending to.
            ;; %desktop-services
 	   ;; instead of %desktop-services, %nonguix-service modifies and returns %desktop-service
-	   %nonguix-service))
+	   %modified-desktop-services))
   (bootloader (bootloader-configuration
                 (bootloader grub-efi-bootloader)
                 (targets (list "/boot/efi"))
