@@ -25,7 +25,11 @@
 						%default-substitute-urls))
 				       (authorized-keys
 					(append (list (local-file "./nonguix-signing-key.pub"))
-						%default-authorized-guix-keys))))))
+						%default-authorized-guix-keys))))
+		   (gdm-service-type config =>
+				     (gdm-configuration
+				      (inherit config)
+				      (wayland? #t)))))
 
 (operating-system
   (kernel linux)
@@ -49,9 +53,20 @@
   ;; Packages installed system-wide.  Users can also install packages
   ;; under their own account: use 'guix search KEYWORD' to search
   ;; for packages and 'guix install PACKAGE' to install a package.
-  (packages (append (list (specification->package "nss-certs")
-			  (specification->package "git")
-			  (specification->package "font-microsoft-web-core-fonts"))
+  ;; (packages (append (list (specification->package "nss-certs")
+  ;; 			  (specification->package "git")
+  ;; 			  (specification->package "font-microsoft-web-core-fonts")
+  ;; 			  (specification->package "trash-cli")
+  ;; 			  (specification->package "flatpak")
+  ;; 			  (specification->package "xdg-desktop-portal-gtk"))
+  ;;                   %base-packages))
+  (packages (append (map specification->package '("nss-certs"
+						  "git"
+						  "font-microsoft-web-core-fonts"
+						  "trash-cli"
+						  "flatpak"
+						  "xdg-desktop-portal-gtk"
+						  "powertop"))
                     %base-packages))
 
   ;; Below is the list of system services.  To search for available
@@ -75,7 +90,6 @@
 
            ;; This is the default list of services we
            ;; are appending to.
-           ;; %desktop-services
 	   ;; instead of %desktop-services, %nonguix-service modifies and returns %desktop-service
 	   %modified-desktop-services))
   (bootloader (bootloader-configuration
